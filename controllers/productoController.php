@@ -27,7 +27,8 @@ class productoController extends Controller {
         }
     }
 
-    function mostrarProducto($id) {
+    function mostrarProducto($params = []) {
+        $id = $params[':ID'];
         $producto = $this->model->getProducto($id);
         if (!empty($producto)) {
             $this->view->mostrarProducto($producto);
@@ -37,7 +38,7 @@ class productoController extends Controller {
         }
     }
 
-    function insertarProducto($urlID) {
+    function insertarProducto() {
             if (isset($_POST['lista_tabla_nombre']) && isset($_POST['lista_tabla_precio']) && isset($_POST['lista_tabla_precio']) && isset($_POST['lista_tabla_descripcion']) && isset($_POST['buscar'])) {
                 $nombre = $_POST['lista_tabla_nombre'];
                 $precio = $_POST['lista_tabla_precio'];
@@ -48,23 +49,29 @@ class productoController extends Controller {
             }
         }
 
-    function eliminarProducto($id_producto) {
-        $this->model->eliminarProducto($id_producto);
-        header("Location: " . PRODUCTO);
-    }
-
-    function crearEdit($id_producto) {
-        if (isset($_SESSION["usuario"])) {
-            $categorias = $this->modelCateg->getCategorias();
-            $producto = $this->model->getProducto($id_producto);
-            $this->view->crearEdit($id_producto, $categorias, $producto);
-        }
-        else {
+    function eliminarProducto($params = []) {
+        $id_producto = $params[':ID'];
+        if (isset($_SESSION["usuario"])) {                  //esto es para ver si no esta logeado, que no pueda eliminar un producto
+            $this->model->eliminarProducto($id_producto);
+            header("Location: " . PRODUCTO);
+        } else {
             header("Location: " . HOME);
         }
     }
 
-    function editarProducto($id_producto) {
+    function crearEdit($params = []) {
+        $id_producto = $params[':ID'];
+        if (isset($_SESSION["usuario"])) {                  //esto es para ver si no esta logeado, que no pueda editar un producto
+            $categorias = $this->modelCateg->getCategorias();
+            $producto = $this->model->getProducto($id_producto);
+            $this->view->crearEdit($id_producto, $categorias, $producto);
+        } else {
+            header("Location: " . HOME);
+        }
+    }
+
+    function editarProducto($params = []) {
+        $id_producto = $params[':ID'];
         $nombre = $_POST['lista_tabla_nombre'];
         $precio = $_POST['lista_tabla_precio'];
         $descripcion = $_POST['lista_tabla_descripcion'];

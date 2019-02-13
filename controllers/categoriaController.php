@@ -25,7 +25,8 @@ class categoriaController extends Controller {
          
     }
 
-    function mostrarCategoria($id) {
+    function mostrarCategoria($params = []) {
+        $id = $params[':ID'];
         $categoria = $this->model->getCategoria($id); //falta hacer este metodo en el model
         $productosCategoria = $this->modelProduc->getProductosCateg($id);
         $this->view->mostrarCategoria($categoria, $productosCategoria);
@@ -39,7 +40,8 @@ class categoriaController extends Controller {
         }
     }
 
-    function eliminarCategoria($id) {
+    function eliminarCategoria($params = []) {
+        $id = $params[':ID'];
         $this->model->eliminarCategoria($id);
         header("Location: " . CATEGORIA);
     }
