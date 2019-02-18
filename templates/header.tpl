@@ -40,5 +40,5 @@
             </div>
         </nav>
         <div class="container-fluid p-0">
-            <div class="row m-0 mt-5 pt-5">
+            <div class="row m-0 mt-5 pt-5 justify-content-center">
     
