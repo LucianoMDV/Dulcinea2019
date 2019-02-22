@@ -35,7 +35,7 @@ class categoriaController extends Controller {
     function insertarCategoria() {
         if (isset($_POST['nombreCateg'])) {
             $nombre = $_POST['nombreCateg'];
-            $this->model->insertarCategoria($nombre);
+            $this->model->insertarCategoria($nombre, $_FILES['adjunto']['tmp_name']);
             header("Location: " . CATEGORIA);
         }
     }

@@ -1,9 +1,13 @@
 {include file="../header.tpl"}
-    <div class="col col-lg-4 bg-light border border-dark">
+    <div class="col col-lg-5 bg-light border border-dark text-center">
         <h1>{$producto->nombre}</h1>
-        
+        ​<picture>
+            <img src="{$producto->imagen}" class="img-fluid img-thumbnail">
+        </picture>
         <p>{$producto->descripcion}</p>
     
-        <a href="producto">Volver a la lista de productos</a>   
+    </div>
+    <div class="col-12 mt-2">
+        <a href="producto" class="col btn btn-primary">Volver a la lista de productos</a>
     </div>
 {include file="../footer.tpl"}

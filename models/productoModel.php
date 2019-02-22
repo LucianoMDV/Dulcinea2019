@@ -21,13 +21,33 @@ class productoModel extends Model{
         return $sentencia->fetchAll(PDO::FETCH_OBJ);
     }
 
-    function insertarProducto($nombre,$precio,$descripcion,$id_categoria) {
-        $sentencia = $this->db_coneccion->prepare("INSERT INTO producto(nombre,precio,descripcion,id_categoria) VALUES(?,?,?,?)");
-        $sentencia->execute(array($nombre,$precio,$descripcion,$id_categoria));
+    function insertarProducto($nombre, $precio, $descripcion, $img = null, $id_categoria) {
+        $pathImg = 'img/dulcinea/5c6c7b2820240.jpg'; //esto es para que quede predeterminado una imagen si no se selecciona ninguna foto para subir y guardar a BD
+        if ($img)
+            $pathImg = $this->uploadImage($img);
+            // var_dump($pathImg);
+        $sentencia = $this->db_coneccion->prepare("INSERT INTO producto(nombre,precio,descripcion,imagen,id_categoria) VALUES(?,?,?,?,?)");
+        $sentencia->execute(array($nombre,$precio,$descripcion,$pathImg,$id_categoria));
+        // var_dump($sentencia->errorinfo()).die();
     }
-    function editarProducto($nombre,$precio,$descripcion,$id_categoria,$id_producto) {
-        $sentencia = $this->db_coneccion->prepare("UPDATE producto SET nombre=?, precio=?, descripcion=?, id_categoria=? WHERE id_producto=?");
-        $sentencia->execute(array($nombre,$precio,$descripcion,$id_categoria,$id_producto));
+    private function uploadImage($image){
+        $target = 'img/dulcinea/' . uniqid() . '.jpg';
+        move_uploaded_file($image, $target);
+        return $target;
+    }
+    function editarProducto($nombre,$precio,$descripcion,$id_categoria,$id_producto, $img = null) {
+        $pathImg = null;
+        if ($img) {
+            $pathImg = $this->uploadImage($img);
+        }
+        if ($pathImg!=null) { //este if esta para prevenir que no se modifique la foto en BD si no se sellecciona ninguna imagen nueva! en el form
+            $sentencia = $this->db_coneccion->prepare("UPDATE producto SET nombre=?, precio=?, descripcion=?, imagen=?, id_categoria=? WHERE id_producto=?");
+            $sentencia->execute(array($nombre,$precio,$descripcion,$pathImg,$id_categoria,$id_producto));
+        } else {
+            $sentencia = $this->db_coneccion->prepare("UPDATE producto SET nombre=?, precio=?, descripcion=?, id_categoria=? WHERE id_producto=?");
+            $sentencia->execute(array($nombre,$precio,$descripcion,$id_categoria,$id_producto));
+        }
+        // var_dump($sentencia->errorinfo()).die();
     }
     function eliminarProducto($id_producto) {
         $sentencia = $this->db_coneccion->prepare("DELETE from producto where id_producto = ?");

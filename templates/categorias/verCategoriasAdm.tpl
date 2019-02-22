@@ -19,7 +19,7 @@
     
     <div class="row">
         <div class="col">
-            <div class="card text-white bg-dark mb-3 m-4" style="max-width: 100rem;">
+            <div class="card text-white bg-dark mb-3 m-4">
                 <div class="card-header">SOLO ADMIN</div>
                 <form class="cargaListaPrecios bg-danger p-3 w-100" method="POST" action="insertarCategoria">
                     <div class="form-group row">

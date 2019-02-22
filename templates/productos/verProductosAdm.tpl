@@ -1,7 +1,7 @@
 {include file="../header.tpl"}
             <div class="col">
                 <div class="card bg-light mb-3">
-                    <div class="card-header">Tabla productos</div>
+                    <div class="card-header h5 text-center">Tabla clasificasion de productos</div>
                     <table class="table table-sm table-dark table-borderedless text-center table-hover mb-0">
                         <thead>
                             <tr>
@@ -15,7 +15,7 @@
                             {foreach from=$productos item=producto} <!-- from="$productos" es un arreglo de la tabla producto -->
                                 <tr>
                                     <td><a class='tablaNombre' href="producto/{$producto->id_producto}">{$producto->nombre}</a></td>            
-                                    <td>{$producto->precio}</td>
+                                    <td>${$producto->precio}</td>
                                     <td>{$producto->nombre_categoria}</td>
                                     <td>
                                         <a class="btn btn-outline-warning" id="modificar" href="crearEdit/{$producto->id_producto}"><i class="fas fa-edit"></i></a> 
@@ -28,11 +28,11 @@
                     {* </div> *}
                 </div>
                 
-                <div class="card text-white bg-dark mb-3" style="max-width: 100rem;">
+                <div class="card text-white bg-dark mb-3">
                     <div class="card-header">SOLO ADMIN</div>
                     {* <div class="card-body"> *}
                         {* <h5 class="card-title">Dark card title</h5> *}
-                        <form class="cargaListaPrecios bg-danger p-3 w-100" method="POST" action="insertarProducto">
+                        <form class="cargaListaPrecios bg-danger p-3 w-100" method="POST" action="insertarProducto" enctype="multipart/form-data">
                             <div class="form-group row">
                                 <label class="col-3 col-md-2 col-form-label">Nombre</label>
                                 <div class="col-9 col-md-10">
@@ -49,6 +49,15 @@
                                 <label class="col-3 col-md-2 col-form-label">Descripcion:</label>
                                 <div class="col-9 col-md-10">
                                     <input class="input ListaCatalogo form-control" type="text" name="lista_tabla_descripcion" placeholder="Ingrese una descripcion" />
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-3 col-md-2 col-form-label" for="adjunto">Adjuntar imagen</label>
+                                <div class="col-9 col-md-10">
+                                    <input type="file" name="adjunto" class="form-control-file" id="adjunto" accept="image/jpeg">
+                                    {if !empty($error) }
+                                        <div class="alert alert-danger mt-2" role="alert">{$error}</div>
+                                    {/if}
                                 </div>
                             </div>
                             <div>

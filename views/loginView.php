@@ -1,6 +1,5 @@
 <?php
 require_once "views/view.php";
-require_once "libs/Smarty.class.php";
 
 class loginView extends View {
 

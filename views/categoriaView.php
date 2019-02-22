@@ -1,7 +1,6 @@
 <?php
 require_once "views/view.php";
 require_once "models/categoriaModel.php";
-require_once "libs/Smarty.class.php";
 
 class categoriaView extends View {
 
